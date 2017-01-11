@@ -9,6 +9,8 @@ var _ = require('underscore');
  * customize it in any way you wish.
  */
 
+// __dirname is the directory name of the current module
+// path.join() joins all given path segments together
 exports.paths = {
   siteAssets: path.join(__dirname, '../web/public'),
   archivedSites: path.join(__dirname, '../archives/sites'),
@@ -25,17 +27,12 @@ exports.initialize = function(pathsObj) {
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
-exports.readListOfUrls = function(callback) {
-};
+exports.readListOfUrls = function(callback) {};
 
-exports.isUrlInList = function(url, callback) {
-};
+exports.isUrlInList = function(url, callback) {};
 
-exports.addUrlToList = function(url, callback) {
-};
+exports.addUrlToList = function(url, callback) {};
 
-exports.isUrlArchived = function(url, callback) {
-};
+exports.isUrlArchived = function(url, callback) {};
 
-exports.downloadUrls = function(urls) {
-};
+exports.downloadUrls = function(urls) {};
