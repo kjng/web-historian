@@ -90,11 +90,18 @@ exports.handleRequestAsync = function(req, res) {
       body = body.split('=')[1];
       console.log(`POST body > ${body}`);
       archive.isUrlInListAsync(body)
-        .then(archive.isUrlArchivedAsync(body)
-          .catch(httpHelpers.redirect(res, 'loading.html'))
-          .then(httpHelpers.redirect(res, body)))
-        .catch(archive.addUrlToListAsync(body))
-          .then(httpHelpers.redirect(res, 'loading.html'));
+        .then(function(found) {
+          found === true ?
+
+          archive.isUrlArchivedAsync(body)
+            .then(function(found) {
+              found === true ? httpHelpers.redirect(res, body) : httpHelpers.redirect(res, 'loading.html');
+            })
+
+          : archive.addUrlToListAsync(body)
+              .then(httpHelpers.redirect(res, 'loading.html'));
+        })
+        .catch(function(error) { console.log('error: ', error); });
       // archive.isUrlInList(body, function(found) {
       //   if (found) {
       //     archive.isUrlArchived(body, function(found) {

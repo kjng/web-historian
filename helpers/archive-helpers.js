@@ -68,13 +68,9 @@ exports.isUrlInList = function(url, callback) {
 
 exports.isUrlInListAsync = function(url) {
   return new Promise(function(resolve, reject) {
-    exports.readListOfUrlsAsync(function(urls) {
+    exports.readListOfUrls(function(urls) {
       var found = _.contains(urls, url);
-      if (found) {
-        resolve(found);
-      } else {
-        reject();
-      }
+      resolve(found);
     });
   });
 };

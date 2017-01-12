@@ -7,7 +7,7 @@ initialize('./archives');
 
 var port = 8080;
 var ip = '127.0.0.1';
-var server = http.createServer(handler.handleRequest);
+var server = http.createServer(handler.handleRequestAsync);
 
 if (module.parent) { // module.parent is the module that first required this one
   module.exports = server; // Not sure what this is used for
