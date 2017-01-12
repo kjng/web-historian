@@ -27,10 +27,13 @@ exports.initialize = function(pathsObj) {
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
+// Read file of the lists of sites
 exports.readListOfUrls = function(callback) {};
 
+// Check if after reading list, the url is found or not
 exports.isUrlInList = function(url, callback) {};
 
+// Append url to list of sites file
 exports.addUrlToList = function(url, callback) {};
 
 exports.isUrlArchived = function(url, callback) {};
