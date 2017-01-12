@@ -2,6 +2,8 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 var request = require('request');
+var Promise = require('bluebird');
+Promise.promisifyAll(fs);
 
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
@@ -42,11 +44,38 @@ exports.readListOfUrls = function(callback) {
   });
 };
 
+exports.readListOfUrlsAsync = function() {
+  var urls = [];
+  return new Promise(function(resolve, reject) {
+    fs.readFileAsync(exports.paths.list, 'utf8', function(err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        urls = data.toString().split('\n');
+        resolve(urls);
+      }
+    });
+  });
+};
+
 // Check if after reading list, the url is found or not
 exports.isUrlInList = function(url, callback) {
   exports.readListOfUrls(function(urls) {
     var found = _.contains(urls, url);
     callback(found);
+  });
+};
+
+exports.isUrlInListAsync = function(url) {
+  return new Promise(function(resolve, reject) {
+    exports.readListOfUrlsAsync(function(urls) {
+      var found = _.contains(urls, url);
+      if (found) {
+        resolve(found);
+      } else {
+        reject();
+      }
+    });
   });
 };
 
@@ -61,11 +90,22 @@ exports.addUrlToList = function(url, callback) {
   });
 };
 
+exports.addUrlToListAsync = Promise.promisify(exports.addUrlToList);
+
 //Check if URL is archived aka if file exists in archives/sites folder
 exports.isUrlArchived = function(url, callback) {
   var site = path.join(exports.paths.archivedSites, url);
   fs.exists(site, function(found) {
     callback(found);
+  });
+};
+
+exports.isUrlArchivedAsync = function(url) {
+  return new Promise(function(resolve, reject) {
+    var site = path.join(exports.paths.archivedSites, url);
+    fs.existsAsync(site, function(found) {
+      resolve(found);
+    });
   });
 };
 
@@ -84,3 +124,5 @@ exports.downloadUrls = function(urls) {
   //       use fs.writeFile (utf8) to write body to
   //       exports.paths.archivedSites + /websiteURL
 };
+
+exports.downloadUrlsAsync = Promise.promisify(exports.downloadUrls);
