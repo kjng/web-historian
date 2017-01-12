@@ -55,9 +55,7 @@ exports.handleRequest = function(req, res) {
       });
     });
   }
-  // res.end(archive.paths.list);
 };
-
 
 exports.handleRequestAsync = function(req, res) {
   // GET
@@ -65,17 +63,15 @@ exports.handleRequestAsync = function(req, res) {
     // Parse url and set url path
     var parsed = url.parse(req.url).pathname;
     var urlPath = parsed;
-    //console.log('urlPath is', urlPath);
+
     // Serves index.html at root
     if (parsed === '/') {
       urlPath = '/index.html';
     }
+
     //urlPath includes / at the front
     // Serve static assets
-    httpHelpers.serveAssets(res, urlPath, function() {
-    //Check this later
-    //Check if url in list, if it is, redirect loading, else 404
-    });
+    httpHelpers.serveAssets(res, urlPath, function() {});
   }
 
   // POST
@@ -96,32 +92,12 @@ exports.handleRequestAsync = function(req, res) {
           archive.isUrlArchivedAsync(body)
             .then(function(found) {
               found === true ? httpHelpers.redirect(res, body) : httpHelpers.redirect(res, 'loading.html');
-            })
+            }) :
 
-          : archive.addUrlToListAsync(body)
+            archive.addUrlToListAsync(body)
               .then(httpHelpers.redirect(res, 'loading.html'));
         })
         .catch(function(error) { console.log('error: ', error); });
-      // archive.isUrlInList(body, function(found) {
-      //   if (found) {
-      //     archive.isUrlArchived(body, function(found) {
-      //       if (!found) {
-      //         // serve loading.html
-      //         console.log(`${body} not found`);
-      //         httpHelpers.redirect(res, 'loading.html');
-      //       } else {
-      //         // serve site
-      //         httpHelpers.redirect(res, body);
-      //       }
-      //     });
-      //   } else {
-      //     archive.addUrlToList(body, function() {
-      //       // serve loading.html
-      //       httpHelpers.redirect(res, 'loading.html');
-      //     });
-      //   }
-      // });
     });
   }
-  // res.end(archive.paths.list);
 };

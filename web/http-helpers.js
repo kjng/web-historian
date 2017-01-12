@@ -25,7 +25,7 @@ exports.headers = {
 
 exports.redirect = function(response, location, statusCode) {
   statusCode = statusCode || 302;
-  response.writeHead(statusCode, Object.assign({Location: location}, exports.headers));
+  response.writeHead(statusCode, Object.assign({ Location: location }, exports.headers));
   response.end();
 };
 
@@ -47,7 +47,7 @@ exports.serveAssets = function(res, asset, callback) {
           res.end(data);
         }
       });
-    // Serves index.html or loading.html or styles.css
+      // Serves index.html or loading.html or styles.css
     } else {
       res.writeHead(200, exports.headers);
       res.end(data);

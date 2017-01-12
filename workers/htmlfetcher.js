@@ -16,13 +16,3 @@ archive.readListOfUrls(archive.downloadUrls);
 
 //   setTimeout(function() { archive.downloadUrls(array); }, 500);
 // });
-
-// Some variable (websitesToArchive)? to store array of websites to archive
-//
-// readListOfUrls...
-//   for each url
-//     isUrlArchived?
-//       if !found
-//         add to websitesToArchive
-//
-// downloadURLs using websitesToArchive
