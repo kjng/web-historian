@@ -7,13 +7,14 @@ exports.handleRequest = function(req, res) {
   // Parse url and set url path
   // GET
   if (req.method === 'GET') {
-    // var parsed = url.parse(req.url);
+    var parsed = url.parse(req.url).pathname;
+    var urlPath = parsed;
 
-    // if (parsed.pathname === '/') {
-    // }
-    var urlPath = '/index.html';
+    if (parsed === '/') {
+      urlPath = '/index.html';
+    }
+
     httpHelpers.serveAssets(res, urlPath, function() {});
-
   }
   // Use serveAssets to grab sites
   // If it found the site on list and not yet archived
